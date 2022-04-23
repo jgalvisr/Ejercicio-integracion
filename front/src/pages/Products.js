@@ -10,8 +10,14 @@ export const Products = () => {
     fetchProducts();
   }, []);
 
+  // No logré enviar el access_token al API :(
   const fetchProducts = async () => {
-    const resp = await fetch(url);
+    const resp = await fetch(url, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Token ' + localStorage.getItem('access_token')
+      }
+    });
     const data = await resp.json();
 
     const productsFromBE = data.products.map((resp) => {

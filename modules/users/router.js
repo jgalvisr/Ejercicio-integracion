@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const { getAllUsers, createUser } = require('./controller');
+const { getAllUsers, createUser, getUserByUserName } = require('./controller');
 
 /* GET users listing. */
 router.get('/', async function (req, res, next) {
@@ -8,9 +8,14 @@ router.get('/', async function (req, res, next) {
   res.json(users);
 });
 
-/**
- * POST create user
- */
+/* GET user by username */
+router.get('/:username', async function (req, res, next) {
+  const username = req.params.username;
+  const user = await getUserByUserName(username);
+  res.json(user);
+});
+
+/* POST create user */
 router.post('/', async function (req, res, next) {
   try {
     const result = await createUser(req.body);
